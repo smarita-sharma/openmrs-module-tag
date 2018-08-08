@@ -33,15 +33,18 @@ public class Tag extends BaseOpenmrsData implements Serializable {
 	
 	private String objectType;
 	
+	private String name;
+	
 	private String Uuid = UUID.randomUUID().toString();
 	
 	public Tag() {
 	}
 	
-	public Tag(String tag, String objectUuid, String objectType) {
+	public Tag(String tag, String objectUuid, String objectType, String name) {
 		this.tag = tag;
 		this.objectUuid = objectUuid;
 		this.objectType = objectType;
+		this.name = name;
 	}
 	
 	@Override
@@ -76,6 +79,14 @@ public class Tag extends BaseOpenmrsData implements Serializable {
 	
 	public void setObjectType(String objectType) {
 		this.objectType = objectType;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String tag) {
+		this.name = name;
 	}
 	
 }

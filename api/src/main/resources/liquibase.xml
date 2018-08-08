@@ -56,4 +56,31 @@
             <column name="object_type"></column>
         </createIndex>
     </changeSet>
+    <changeSet id="tag-2018-08-08-12-22" author="smarita-sharma">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="tag"/></not>
+        </preConditions>
+        <comment>
+            Creating the Tag table independant of patient uuid
+        </comment>
+        <createTable tableName="tag">
+            <column name="tag_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="creator" type="int">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="uuid" type="char(38)">
+                <constraints nullable="false" unique="true"></constraints>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="tag_owner_foreignkey" baseTableName="tag" baseColumnNames="creator" referencedTableName="users"
+                                 referencedColumnNames="user_id" />
+    </changeSet>
 </databaseChangeLog>
