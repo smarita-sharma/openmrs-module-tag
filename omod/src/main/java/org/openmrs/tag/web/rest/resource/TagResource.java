@@ -52,7 +52,7 @@ import java.util.UUID;
 @Resource(name = RestConstants.VERSION_1 + "/tag", supportedClass = Tag.class, supportedOpenmrsVersions = { "1.11.*",
         "1.12.*", "2.0.*", "2.1.*" })
 public class TagResource extends DelegatingCrudResource<Tag> {
-	
+
 	/**
 	 * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceHandler#newDelegate()
 	 */
@@ -60,13 +60,13 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	public Tag newDelegate() {
 		return new Tag();
 	}
-	
+
 	/**
 	 * @see BaseDelegatingResource#getByUniqueId(String)
 	 */
 	@Override
 	public Tag getByUniqueId(String uuid) {
-		
+
 		try {
 			UUID uuid1 = UUID.fromString(uuid);
 			return Context.getService(TagService.class).getTagByUuid(uuid);
@@ -81,7 +81,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 			return tag;
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceHandler#save(Object)
 	 */
@@ -89,7 +89,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	public Tag save(Tag tag) {
 		return getService().saveTag(tag);
 	}
-	
+
 	/**
 	 * @see BaseDelegatingResource#delete(Object,String, RequestContext)
 	 */
@@ -97,7 +97,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	protected void delete(Tag tag, String reason, RequestContext context) {
 		throw new ResourceDoesNotSupportOperationException("delete not allowed on tag");
 	}
-	
+
 	/**
 	 * @see BaseDelegatingResource#purge(Object, RequestContext)
 	 */
@@ -105,7 +105,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	public void purge(Tag tag, RequestContext context) {
 		getService().purgeTag(tag);
 	}
-	
+
 	/**
 	 * Returns the DefaultRepresentation
 	 */
@@ -129,7 +129,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 		description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 		return convertDelegateToRepresentation(delegate, description);
 	}
-	
+
 	/**
 	 * Returns the FullRepresentation
 	 */
@@ -160,7 +160,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 		description.addSelfLink();
 		return convertDelegateToRepresentation(delegate, description);
 	}
-	
+
 	/**
 	 * @see BaseDelegatingResource#getRepresentationDescription(Representation)
 	 */
@@ -175,7 +175,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Property getter for 'display'
 	 */
@@ -183,28 +183,28 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	public String getDisplay(Tag instance) {
 		return instance.getTag();
 	}
-	
+
 	/**
 	 * @return the TagService
 	 */
 	private TagService getService() {
 		return Context.getService(TagService.class);
 	}
-	
+
 	/**
 	 * @see BaseDelegatingResource#getCreatableProperties()
 	 */
 	@Override
 	public DelegatingResourceDescription getCreatableProperties() {
 		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		
+
 		description.addRequiredProperty("tag");
 		description.addRequiredProperty("objectType");
 		description.addRequiredProperty("objectUuid");
-		
+
 		return description;
 	}
-	
+
 	/**
 	 * @see DelegatingCrudResource#doGetAll(RequestContext)
 	 */
@@ -212,10 +212,10 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	protected NeedsPaging<Tag> doGetAll(RequestContext context) throws ResponseException {
 		throw new ResourceDoesNotSupportOperationException();
 	}
-	
+
 	/**
 	 * Method to obtain the Uri of any OpenrmrsObject
-	 * 
+	 *
 	 * @param objectType the Java class name of the object
 	 * @param objectUuid the Uuid of the object
 	 * @return the Uri of the given object
@@ -230,14 +230,14 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 		        .getResourceBySupportedClass(className);
 		return resource.getUri(resource.getByUniqueId(objectUuid));
 	}
-	
+
 	/**
 	 * Extracts resource name from a resource handler
-	 * 
+	 *
 	 * @return resource name
 	 */
 	private String getResourceName(String objectType) {
-		
+
 		Class<?> className = null;
 		try {
 			className = Context.loadClass(objectType);
@@ -246,7 +246,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 		DelegatingResourceHandler resourceHandler = (DelegatingResourceHandler<?>) Context.getService(RestService.class)
 		        .getResourceBySupportedClass(className);
 		Resource annotation = resourceHandler.getClass().getAnnotation(Resource.class);
-		
+
 		String resourceName = null;
 		if (annotation != null) {
 			resourceName = annotation.name();
@@ -258,7 +258,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 		}
 		return resourceName;
 	}
-	
+
 	/**
 	 * @see DelegatingCrudResource#doSearch(RequestContext)
 	 */
