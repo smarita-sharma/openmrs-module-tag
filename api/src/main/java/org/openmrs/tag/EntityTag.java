@@ -23,22 +23,27 @@ import java.util.UUID;
  * identifier of the object, and <i>tag</i> the text label to be attached to the OpenmrsObject.
  */
 
-public class Tag extends BaseOpenmrsData implements Serializable {
+public class EntityTag extends BaseOpenmrsData implements Serializable {
 	
 	private static final long serialVersionUID = 6713376997114869435L;
 	
 	private Integer tagId;
 	
-	private String name;
+	private String tag;
+	
+	private String objectUuid;
+	
+	private String objectType;
 	
 	private String Uuid = UUID.randomUUID().toString();
 	
-	public Tag() {
+	public EntityTag() {
 	}
 	
-	public Tag(String name) {
-		this.name = name;
-		
+	public EntityTag(String tag, String objectUuid, String objectType) {
+		this.tag = tag;
+		this.objectUuid = objectUuid;
+		this.objectType = objectType;
 	}
 	
 	@Override
@@ -51,12 +56,27 @@ public class Tag extends BaseOpenmrsData implements Serializable {
 		this.tagId = tagId;
 	}
 	
-	public String getName() {
-		return name;
+	public String getTag() {
+		return tag;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 	
+	public String getObjectUuid() {
+		return objectUuid;
+	}
+	
+	public void setObjectUuid(String objectUuid) {
+		this.objectUuid = objectUuid;
+	}
+	
+	public String getObjectType() {
+		return objectType;
+	}
+	
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
+	}
 }

@@ -16,6 +16,7 @@ package org.openmrs.tag.api.db;
 
 import org.openmrs.OpenmrsObject;
 import org.openmrs.tag.Tag;
+import org.openmrs.tag.EntityTag;
 import org.openmrs.api.APIException;
 
 import java.util.List;
@@ -25,37 +26,37 @@ public interface TagDAO {
 	/**
 	 * @see org.openmrs.tag.api.TagService#getTagByUuid(String)
 	 */
-	Tag getTagByUuid(String uuid);
+	EntityTag getTagByUuid(String uuid);
 	
 	/**
 	 * @see org.openmrs.tag.api.TagService#getTag(Integer)
 	 */
-	Tag getTag(Integer id);
+	EntityTag getTag(Integer id);
 	
 	/**
 	 * @see org.openmrs.tag.api.TagService#getTags(String, boolean)
 	 */
-	List<Tag> getTags(String tag, boolean exactMatch);
+	List<EntityTag> getTags(String tag, boolean exactMatch);
 	
 	/**
 	 * @see org.openmrs.tag.api.TagService#getTags(OpenmrsObject)
 	 */
-	List<Tag> getTags(OpenmrsObject openmrsObject);
+	List<EntityTag> getTags(OpenmrsObject openmrsObject);
 	
 	/**
 	 * @see org.openmrs.tag.api.TagService#getTags(String, String)
 	 */
-	List<Tag> getTags(String objectType, String objectUuid);
+	List<EntityTag> getTags(String objectType, String objectUuid);
 	
 	/**
-	 * @see org.openmrs.tag.api.TagService#saveTag(Tag)
+	 * @see org.openmrs.tag.api.TagService#saveTag(EntityTag)
 	 */
-	Tag saveTag(Tag tag);
+	EntityTag saveTag(EntityTag tag);
 	
 	/**
-	 * @see org.openmrs.tag.api.TagService#purgeTag(Tag)
+	 * @see org.openmrs.tag.api.TagService#purgeTag(EntityTag)
 	 */
-	void deleteTag(Tag tag);
+	void deleteTag(EntityTag tag);
 	
 	/**
 	 * @see org.openmrs.tag.api.TagService#getAllTags()
@@ -65,7 +66,7 @@ public interface TagDAO {
 	/**
 	 * @see org.openmrs.tag.api.TagService#getTags(List, List)
 	 */
-	List<Tag> getTags(List<String> objectType, List<String> tags);
+	List<EntityTag> getTags(List<String> objectType, List<String> tags);
 	
 	/**
 	 * @see org.openmrs.tag.api.impl.TagServiceImpl#getObject(Class, String)
@@ -80,5 +81,5 @@ public interface TagDAO {
 	 * @param tag the textual label (tag) on that object
 	 * @return the Tag object with matching parameters
 	 */
-	Tag getTag(String objectType, String objectUuid, String tag);
+	EntityTag getTag(String objectType, String objectUuid, String tag);
 }
