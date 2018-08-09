@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.openmrs.tag.Tag;
+import org.openmrs.tag.EntityTag;
 import org.openmrs.tag.api.TagService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
@@ -107,10 +108,10 @@ public class TagRestControllerTest extends MainResourceControllerTest {
 		tag.add("tag", "testName");
 		tag.add("objectType", objectType);
 		tag.add("objectUuid", objectUuid);
-		List<Tag> tagList = Context.getService(TagService.class).getTags(objectType, objectUuid);
+		List<EntityTag> tagList = Context.getService(TagService.class).getTags(objectType, objectUuid);
 		assertEquals(2, tagList.size());
 		SimpleObject result = deserialize(handle(newPostRequest(getURI(), tag)));
-		List<Tag> tagList1 = Context.getService(TagService.class).getTags(objectType, objectUuid);
+		List<EntityTag> tagList1 = Context.getService(TagService.class).getTags(objectType, objectUuid);
 		assertEquals(3, tagList1.size());
 	}
 }

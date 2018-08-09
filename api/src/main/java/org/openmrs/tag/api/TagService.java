@@ -14,6 +14,7 @@ import org.openmrs.tag.TagConstants;
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.tag.Tag;
+import org.openmrs.tag.EntityTag;
 import org.openmrs.api.context.Context;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public interface TagService extends OpenmrsService {
 	 * @return tag or null
 	 */
 	@Authorized(TagConstants.GET_TAGS)
-	Tag getTagByUuid(String uuid);
+	EntityTag getTagByUuid(String uuid);
 	
 	/**
 	 * Saves a tag. Tags can only be added not edited.
@@ -45,7 +46,7 @@ public interface TagService extends OpenmrsService {
 	 * @return Tag that has been saved
 	 */
 	@Authorized(TagConstants.MANAGE_TAGS)
-	Tag saveTag(Tag tag);
+	EntityTag saveTag(EntityTag tag);
 	
 	/**
 	 * Completely delete the tag from the database.
@@ -53,7 +54,7 @@ public interface TagService extends OpenmrsService {
 	 * @param tag The Tag to remove from the system
 	 */
 	@Authorized(TagConstants.MANAGE_TAGS)
-	void purgeTag(Tag tag);
+	void purgeTag(EntityTag tag);
 	
 	/**
 	 * Removes a tag(if exists) from an OpenmrsObject.
@@ -71,7 +72,7 @@ public interface TagService extends OpenmrsService {
 	 * @return Tag with given internal identifier
 	 */
 	@Authorized(TagConstants.GET_TAGS)
-	Tag getTag(Integer tagId);
+	EntityTag getTag(Integer tagId);
 	
 	/**
 	 * Fetches a list of Tag objects having the given search Phrase in their tag. Partial Search
@@ -82,7 +83,7 @@ public interface TagService extends OpenmrsService {
 	 * @return List of Tag Objects
 	 */
 	@Authorized(TagConstants.GET_TAGS)
-	List<Tag> getTags(String searchPhrase, boolean exactMatch);
+	List<EntityTag> getTags(String searchPhrase, boolean exactMatch);
 	
 	/**
 	 * Fetches a list of All Unique String Tags.
@@ -101,7 +102,7 @@ public interface TagService extends OpenmrsService {
 	 * @return The Tag object of tag on the Object
 	 */
 	@Authorized(TagConstants.MANAGE_TAGS)
-	Tag addTag(OpenmrsObject openmrsObject, String tag);
+	EntityTag addTag(OpenmrsObject openmrsObject, String tag);
 	
 	/**
 	 * Fetches a list of tags objects added to the openmrs object
@@ -111,7 +112,7 @@ public interface TagService extends OpenmrsService {
 	 *         parameter
 	 */
 	@Authorized(TagConstants.GET_TAGS)
-	List<Tag> getTags(OpenmrsObject openmrsObject);
+	List<EntityTag> getTags(OpenmrsObject openmrsObject);
 	
 	/**
 	 * Fetches a list of tags objects added to the openmrs object of give type and uuid.
@@ -121,7 +122,7 @@ public interface TagService extends OpenmrsService {
 	 * @return a list of tag objects having the same object type and uuid
 	 */
 	@Authorized(TagConstants.GET_TAGS)
-	List<Tag> getTags(String objectType, String objectUuid);
+	List<EntityTag> getTags(String objectType, String objectUuid);
 	
 	/**
 	 * Fetches all tag objects where the type is in the specified list of types and the tag is in
@@ -133,5 +134,5 @@ public interface TagService extends OpenmrsService {
 	 * @return a list of tag objects which have an object_type and a tag from the parameters
 	 */
 	@Authorized(TagConstants.GET_TAGS)
-	List<Tag> getTags(List<Class<? extends OpenmrsObject>> objectTypes, List<String> tags);
+	List<EntityTag> getTags(List<Class<? extends OpenmrsObject>> objectTypes, List<String> tags);
 }

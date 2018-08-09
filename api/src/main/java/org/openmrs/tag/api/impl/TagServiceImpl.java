@@ -15,6 +15,7 @@ import org.openmrs.OpenmrsObject;
 import org.openmrs.api.APIException;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.tag.Tag;
+import org.openmrs.tag.EntityTag;
 import org.openmrs.tag.api.TagService;
 import org.openmrs.api.context.Context;
 import org.openmrs.tag.api.db.TagDAO;
@@ -45,16 +46,16 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	 * @see TagService#getTagByUuid(String)
 	 */
 	@Override
-	public Tag getTagByUuid(String uuid) {
+	public EntityTag getTagByUuid(String uuid) {
 		return dao.getTagByUuid(uuid);
 	}
 	
 	/**
-	 * @see TagService#saveTag(Tag)
+	 * @see TagService#saveTag(EntityTag)
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Tag saveTag(Tag tag) {
+	public EntityTag saveTag(EntityTag tag) {
 		if (getObject(toClass(tag.getObjectType()), tag.getObjectUuid()) == null) {
 			log.warn("Object does not exist in the the database");
 		}
@@ -62,11 +63,11 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	}
 	
 	/**
-	 * @see TagService#purgeTag(Tag)
+	 * @see TagService#purgeTag(EntityTag)
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public void purgeTag(Tag tag) {
+	public void purgeTag(EntityTag tag) {
 		dao.deleteTag(tag);
 	}
 	
@@ -76,7 +77,7 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	@Override
 	@Transactional(readOnly = false)
 	public boolean removeTag(OpenmrsObject openmrsObject, String tag) {
-		Tag tag1 = dao.getTag(openmrsObject.getClass().getName(), openmrsObject.getUuid(), tag);
+		EntityTag tag1 = dao.getTag(openmrsObject.getClass().getName(), openmrsObject.getUuid(), tag);
 		if (tag1 == null) {
 			log.warn("Tag does not exist");
 		} else {
@@ -98,7 +99,7 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	 * @see TagService#getTag(Integer)
 	 */
 	@Override
-	public Tag getTag(Integer tagId) {
+	public EntityTag getTag(Integer tagId) {
 		return dao.getTag(tagId);
 	}
 	
@@ -106,7 +107,7 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	 * @see TagService#getTags(String, boolean)
 	 */
 	@Override
-	public List<Tag> getTags(String searchPhrase, boolean exactMatch) {
+	public List<EntityTag> getTags(String searchPhrase, boolean exactMatch) {
 		return dao.getTags(searchPhrase, exactMatch);
 	}
 	
@@ -123,11 +124,11 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Tag addTag(OpenmrsObject openmrsObject, String tag) {
+	public EntityTag addTag(OpenmrsObject openmrsObject, String tag) {
 		if (hasTag(openmrsObject, tag)) {
 			log.warn("duplicate Tag for " + openmrsObject);
 		} else {
-			return saveTag(new Tag(tag, openmrsObject.getUuid(), openmrsObject.getClass().getName()));
+			return saveTag(new EntityTag(tag, openmrsObject.getUuid(), openmrsObject.getClass().getName()));
 		}
 		return null;
 	}
@@ -143,7 +144,7 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	 * @see TagService#getTags(OpenmrsObject)
 	 */
 	@Override
-	public List<Tag> getTags(OpenmrsObject openmrsObject) {
+	public List<EntityTag> getTags(OpenmrsObject openmrsObject) {
 		return dao.getTags(openmrsObject);
 	}
 	
@@ -151,7 +152,7 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	 * @see TagService#getTags(String, String)
 	 */
 	@Override
-	public List<Tag> getTags(String objectType, String objectUuid) {
+	public List<EntityTag> getTags(String objectType, String objectUuid) {
 		return dao.getTags(objectType, objectUuid);
 	}
 	
@@ -159,7 +160,7 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 	 * @see TagService#getTags(List, List)
 	 */
 	@Override
-	public List<Tag> getTags(List<Class<? extends OpenmrsObject>> objectTypes, List<String> tags) {
+	public List<EntityTag> getTags(List<Class<? extends OpenmrsObject>> objectTypes, List<String> tags) {
 		if (tags.isEmpty()) {
 			throw new APIException("tags cannot be empty");
 		}
@@ -198,12 +199,12 @@ public class TagServiceImpl extends BaseOpenmrsService implements TagService {
 		while (iterator.hasNext()) {
 			types.add(iterator.next().getName());
 		}
-		List<Tag> tagList = dao.getTags(types, tags);
+		List<EntityTag> tagList = dao.getTags(types, tags);
 		List<OpenmrsObject> finalList = new ArrayList<OpenmrsObject>();
-		Map<OpenmrsObject, List<Tag>> map = new HashMap<OpenmrsObject, List<Tag>>();
-		for (Tag tag : tagList) {
+		Map<OpenmrsObject, List<EntityTag>> map = new HashMap<OpenmrsObject, List<EntityTag>>();
+		for (EntityTag tag : tagList) {
 			OpenmrsObject key = getObject(toClass(tag.getObjectType()), tag.getObjectUuid());
-			List<Tag> list = new ArrayList<Tag>();
+			List<EntityTag> list = new ArrayList<EntityTag>();
 			if (map.containsKey(key)) {
 				map.get(key).add(tag);
 				list.addAll(map.get(key));

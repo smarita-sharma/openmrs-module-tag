@@ -21,6 +21,7 @@ import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.tag.api.db.TagDAO;
 import org.openmrs.tag.Tag;
+import org.openmrs.tag.EntityTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -41,23 +42,23 @@ public class HibernateTagDao implements TagDAO {
 	/**
 	 * @see TagDAO#getTagByUuid(String)
 	 */
-	public Tag getTagByUuid(String uuid) {
-		return (Tag) getSession().createCriteria(Tag.class).add(Restrictions.eq("uuid", uuid)).uniqueResult();
+	public EntityTag getTagByUuid(String uuid) {
+		return (EntityTag) getSession().createCriteria(EntityTag.class).add(Restrictions.eq("uuid", uuid)).uniqueResult();
 	}
 	
 	/**
-	 * @see TagDAO#saveTag(Tag)
+	 * @see TagDAO#saveTag(EntityTag)
 	 */
-	public Tag saveTag(Tag tag) {
+	public EntityTag saveTag(EntityTag tag) {
 		getSession().saveOrUpdate(tag);
 		return tag;
 	}
 	
 	/**
-	 * @see TagDAO#deleteTag(Tag)
+	 * @see TagDAO#deleteTag(EntityTag)
 	 */
 	@Override
-	public void deleteTag(Tag tag) {
+	public void deleteTag(EntityTag tag) {
 		getSession().delete(tag);
 	}
 	
@@ -66,7 +67,7 @@ public class HibernateTagDao implements TagDAO {
 	 */
 	@Override
 	public List<String> getAllTags() {
-		return getSession().createCriteria(Tag.class).setProjection(Projections.distinct(Projections.property("tag")))
+		return getSession().createCriteria(Tag.class).setProjection(Projections.distinct(Projections.property("name")))
 		        .list();
 	}
 	
@@ -74,16 +75,16 @@ public class HibernateTagDao implements TagDAO {
 	 * @see TagDAO#getTag(Integer)
 	 */
 	@Override
-	public Tag getTag(Integer id) {
-		return (Tag) getSession().get(Tag.class, id);
+	public EntityTag getTag(Integer id) {
+		return (EntityTag) getSession().get(EntityTag.class, id);
 	}
 	
 	/**
 	 * @see TagDAO#getTags(String, boolean)
 	 */
 	@Override
-	public List<Tag> getTags(String tag, boolean exactMatch) {
-		Criteria criteria = getSession().createCriteria(Tag.class);
+	public List<EntityTag> getTags(String tag, boolean exactMatch) {
+		Criteria criteria = getSession().createCriteria(EntityTag.class);
 		if (exactMatch) {
 			return criteria.add(Restrictions.eq("tag", tag)).list();
 		}
@@ -94,7 +95,7 @@ public class HibernateTagDao implements TagDAO {
 	 * @see TagDAO#getTags(OpenmrsObject)
 	 */
 	@Override
-	public List<Tag> getTags(OpenmrsObject openmrsObject) {
+	public List<EntityTag> getTags(OpenmrsObject openmrsObject) {
 		Criteria criteria = getSession().createCriteria(Tag.class);
 		criteria.add(Restrictions.eq("objectType", openmrsObject.getClass().getName()));
 		criteria.add(Restrictions.eq("objectUuid", (openmrsObject.getUuid())));
@@ -105,7 +106,7 @@ public class HibernateTagDao implements TagDAO {
 	 * @see TagDAO#getTags(String, String)
 	 */
 	@Override
-	public List<Tag> getTags(String objectType, String objectUuid) {
+	public List<EntityTag> getTags(String objectType, String objectUuid) {
 		Criteria criteria = getSession().createCriteria(Tag.class);
 		criteria.add(Restrictions.eq("objectType", objectType));
 		criteria.add(Restrictions.eq("objectUuid", objectUuid));
@@ -125,8 +126,8 @@ public class HibernateTagDao implements TagDAO {
 	 * @see TagDAO#getTags(List, List)
 	 */
 	@Override
-	public List<Tag> getTags(List<String> objectTypes, List<String> tags) {
-		Criteria criteria = getSession().createCriteria(Tag.class);
+	public List<EntityTag> getTags(List<String> objectTypes, List<String> tags) {
+		Criteria criteria = getSession().createCriteria(EntityTag.class);
 		if (CollectionUtils.isNotEmpty(objectTypes)) {
 			criteria.add(Restrictions.in("objectType", objectTypes));
 		}
@@ -138,11 +139,11 @@ public class HibernateTagDao implements TagDAO {
 	 * @see TagDAO#getTag(String, String, String)
 	 */
 	@Override
-	public Tag getTag(String objectType, String objectUuid, String tag) {
-		Criteria criteria = getSession().createCriteria(Tag.class);
+	public EntityTag getTag(String objectType, String objectUuid, String tag) {
+		Criteria criteria = getSession().createCriteria(EntityTag.class);
 		criteria.add(Restrictions.eq("objectType", objectType));
 		criteria.add(Restrictions.eq("objectUuid", objectUuid));
 		criteria.add(Restrictions.eq("tag", tag));
-		return (Tag) criteria.uniqueResult();
+		return (EntityTag) criteria.uniqueResult();
 	}
 }

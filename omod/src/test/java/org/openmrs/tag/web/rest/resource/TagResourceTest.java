@@ -1,6 +1,7 @@
 package org.openmrs.tag.web.rest.resource;
 
 import org.openmrs.tag.Tag;
+import org.openmrs.tag.EntityTag;
 import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.tag.api.TagService;
@@ -8,7 +9,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResourceTest;
 import org.openmrs.tag.web.rest.TagRestTestConstants;
 
-public class TagResourceTest extends BaseDelegatingResourceTest<TagResource, Tag> {
+public class TagResourceTest extends BaseDelegatingResourceTest<TagResource, EntityTag> {
 	
 	private static final String TAG_RESOURCE_DATASET = "TagServiceDataset.xml";
 	
@@ -18,7 +19,7 @@ public class TagResourceTest extends BaseDelegatingResourceTest<TagResource, Tag
 	}
 	
 	@Override
-	public Tag newObject() {
+	public EntityTag newObject() {
 		return Context.getService(TagService.class).getTagByUuid(getUuidProperty());
 	}
 	

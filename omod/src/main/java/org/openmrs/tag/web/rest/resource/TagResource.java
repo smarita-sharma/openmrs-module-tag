@@ -16,6 +16,7 @@ package org.openmrs.tag.web.rest.resource;
 import org.apache.commons.lang3.StringUtils;
 import org.openmrs.OpenmrsObject;
 import org.openmrs.tag.Tag;
+import org.openmrs.tag.EntityTag;
 import org.openmrs.tag.api.TagService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
@@ -51,32 +52,32 @@ import java.util.UUID;
 
 @Resource(name = RestConstants.VERSION_1 + "/tag", supportedClass = Tag.class, supportedOpenmrsVersions = { "1.11.*",
         "1.12.*", "2.0.*", "2.1.*" })
-public class TagResource extends DelegatingCrudResource<Tag> {
+public class TagResource extends DelegatingCrudResource<EntityTag> {
 	
 	/**
 	 * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceHandler#newDelegate()
 	 */
 	@Override
-	public Tag newDelegate() {
-		return new Tag();
+	public EntityTag newDelegate() {
+		return new EntityTag();
 	}
 	
 	/**
 	 * @see BaseDelegatingResource#getByUniqueId(String)
 	 */
 	@Override
-	public Tag getByUniqueId(String uuid) {
+	public EntityTag getByUniqueId(String uuid) {
 		
 		try {
 			UUID uuid1 = UUID.fromString(uuid);
 			return Context.getService(TagService.class).getTagByUuid(uuid);
 		}
 		catch (IllegalArgumentException e) {
-			List<Tag> tagList = Context.getService(TagService.class).getTags(uuid, true);
+			List<EntityTag> tagList = Context.getService(TagService.class).getTags(uuid, true);
 			if (tagList.size() == 0) {
 				return null;
 			}
-			Tag tag = new Tag();
+			EntityTag tag = new EntityTag();
 			tag.setTag(uuid);
 			return tag;
 		}
@@ -86,7 +87,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	 * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceHandler#save(Object)
 	 */
 	@Override
-	public Tag save(Tag tag) {
+	public EntityTag save(EntityTag tag) {
 		return getService().saveTag(tag);
 	}
 	
@@ -94,7 +95,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	 * @see BaseDelegatingResource#delete(Object,String, RequestContext)
 	 */
 	@Override
-	protected void delete(Tag tag, String reason, RequestContext context) {
+	protected void delete(EntityTag tag, String reason, RequestContext context) {
 		throw new ResourceDoesNotSupportOperationException("delete not allowed on tag");
 	}
 	
@@ -102,7 +103,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	 * @see BaseDelegatingResource#purge(Object, RequestContext)
 	 */
 	@Override
-	public void purge(Tag tag, RequestContext context) {
+	public void purge(EntityTag tag, RequestContext context) {
 		getService().purgeTag(tag);
 	}
 	
@@ -110,7 +111,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	 * Returns the DefaultRepresentation
 	 */
 	@RepHandler(DefaultRepresentation.class)
-	public SimpleObject asDef(Tag delegate) throws ConversionException, ClassNotFoundException {
+	public SimpleObject asDef(EntityTag delegate) throws ConversionException, ClassNotFoundException {
 		DelegatingResourceDescription description = new DelegatingResourceDescription();
 		description.addProperty("tag");
 		if (StringUtils.isNotBlank(delegate.getObjectType())) {
@@ -118,10 +119,10 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 			description.addProperty("objectType");
 			description.addProperty("objectUuid");
 		}
-		List<Tag> tagList = Context.getService(TagService.class).getTags(delegate.getTag(), true);
-		Iterator<Tag> tagIterator = tagList.iterator();
+		List<EntityTag> tagList = Context.getService(TagService.class).getTags(delegate.getTag(), true);
+		Iterator<EntityTag> tagIterator = tagList.iterator();
 		while (tagIterator.hasNext()) {
-			Tag iterator = tagIterator.next();
+			EntityTag iterator = tagIterator.next();
 			description.addLink(getResourceName(iterator.getObjectType()),
 			    getUriOfObject(iterator.getObjectType(), iterator.getObjectUuid()));
 		}
@@ -134,7 +135,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	 * Returns the FullRepresentation
 	 */
 	@RepHandler(FullRepresentation.class)
-	public SimpleObject asFull(Tag delegate) throws ConversionException {
+	public SimpleObject asFull(EntityTag delegate) throws ConversionException {
 		DelegatingResourceDescription description = new DelegatingResourceDescription();
 		if (StringUtils.isNotBlank(delegate.getObjectType())) {
 			description.addProperty("uuid");
@@ -143,10 +144,10 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 			description.addProperty("objectUuid");
 			description.addProperty("auditInfo");
 		} else {
-			List<Tag> tags = getService().getTags(delegate.getTag(), true);
+			List<EntityTag> tags = getService().getTags(delegate.getTag(), true);
 			SimpleObject simpleObject = new SimpleObject();
 			List<Map<String, Object>> taggedObjects = new ArrayList<Map<String, Object>>();
-			for (Tag t : tags) {
+			for (EntityTag t : tags) {
 				Map<String, Object> taggedObject = new LinkedHashMap<String, Object>();
 				taggedObject.put("tag", t.getTag());
 				taggedObject.put("uuid", t.getUuid());
@@ -180,7 +181,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	 * Property getter for 'display'
 	 */
 	@PropertyGetter("display")
-	public String getDisplay(Tag instance) {
+	public String getDisplay(EntityTag instance) {
 		return instance.getTag();
 	}
 	
@@ -209,7 +210,7 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 	 * @see DelegatingCrudResource#doGetAll(RequestContext)
 	 */
 	@Override
-	protected NeedsPaging<Tag> doGetAll(RequestContext context) throws ResponseException {
+	protected NeedsPaging<EntityTag> doGetAll(RequestContext context) throws ResponseException {
 		throw new ResourceDoesNotSupportOperationException();
 	}
 	
@@ -278,9 +279,9 @@ public class TagResource extends DelegatingCrudResource<Tag> {
 			if (StringUtils.isNotBlank(tagName)) {
 				ArrayList<String> tagNames = new ArrayList<String>();
 				tagNames.add(tagName);
-				return new NeedsPaging<Tag>(getService().getTags(openmrsObjects, tagNames), context);
+				return new NeedsPaging<EntityTag>(getService().getTags(openmrsObjects, tagNames), context);
 			} else if (StringUtils.isNotBlank(objectUuid)) {
-				return new NeedsPaging<Tag>(getService().getTags(objectType, objectUuid), context);
+				return new NeedsPaging<EntityTag>(getService().getTags(objectType, objectUuid), context);
 			} else {
 				throw new GenericRestException();
 			}
