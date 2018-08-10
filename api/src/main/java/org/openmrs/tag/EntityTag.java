@@ -35,8 +35,6 @@ public class EntityTag extends BaseOpenmrsData implements Serializable {
 
 	private String objectType;
 
-	private String Uuid = UUID.randomUUID().toString();
-
 	public EntityTag() {
 	}
 
