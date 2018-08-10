@@ -37,13 +37,8 @@ public class TagServiceTest extends BaseModuleContextSensitiveTest {
 	@Before
 	public void runBeforeTests() throws Exception {
 		executeDataSet(TAG_INITIAL_XML);
+		
 		tagService = Context.getService(TagService.class);
-	}
-	
-	@Test
-	public void getAllTags_shouldFetchAllUniqueStringTags() throws Exception {
-		List<String> list = tagService.getAllTags();
-		assertEquals(6, list.size());
 	}
 	
 	@Test

@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/rest/" + RestConstants.VERSION_1)
+@RequestMapping(value = "/rest/" + RestConstants.VERSION_1 + "/tag/unique")
 public class TagController extends BaseRestController {
 	
 	@Autowired
 	private TagService tagService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/rest/tag/unique")
+	//@RequestMapping(method = RequestMethod.GET, value = "/tag/unique")
 	@ResponseBody
 	public List<String> allTags() {
 		return tagService.getAllTags();

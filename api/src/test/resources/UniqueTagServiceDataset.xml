@@ -1,0 +1,28 @@
+<dataset>
+    <tag tag_id="1" name="Initial" creator="1"
+    date_created="2017-06-03 14:09:05.0" uuid="7379a456-296a-2331-9c83-a3714b82d7ac"/>
+    <tag tag_id="2" name="Vip-Encounters" creator="1"
+         date_created="2017-06-03 14:09:05.0" uuid="7379a456-296a-1112-8b21-a2144b82d7bc"/>
+    <tag tag_id="3" name="FollowUp" creator="1"
+         date_created="2017-06-03 14:09:05.0" uuid="e12c432c-1b9f-343e-b332-f3ef6c88ad3f"/>
+    <tag tag_id="4" name="FollowUp" creator="1"
+             date_created="2017-06-03 14:09:05.0" uuid="5379a456-296a-2331-9c83-a3714b82d7ac"/>
+    <tag tag_id="5" name="Initial" creator="1"
+             date_created="2017-06-12 14:09:05.0" uuid="5349a456-296a-2331-9c83-a3714b82d7ac"/>
+    <tag tag_id="6" name="Initial" creator="1"
+             date_created="2017-06-12 14:09:05.0" uuid="y403fafb-e5e4-42d0-9d11-4f52e89d123r"/>
+    <tag tag_id="7" name="Initial" creator="1"
+             date_created="2017-06-12 14:09:05.0" uuid="7379a456-296a-2311-9c83-a3714b82d7ac"/>
+    <tag tag_id="8" name="Vip-User" creator="1"
+             date_created="2017-06-12 14:09:05.0" uuid="7379a456-296a-1112-8b21-a3344b82d7bf"/>
+    <tag tag_id="9" name="FollowUp" creator="1"
+             date_created="2017-06-12 14:09:05.0" uuid="e12c432a-1e9f-343e-b332-f3ef6c88ad3d"/>
+    <tag tag_id="10" name="FollowUp" creator="1"
+             date_created="2017-06-12 14:09:05.0" uuid="5379a456-296a-1223-9c83-a3714b82d7qc"/>
+    <tag tag_id="11" name="Initial" creator="1"
+             date_created="2017-06-12 14:09:05.0" uuid="5349a456-296a-2331-9c83-a3714b82d7ds"/>
+    <tag tag_id="12" name="Large-Orders" creator="1"
+             date_created="2017-06-12 14:09:05.0" uuid="5349a456-296a-2331-9c83-a3714b82d1cv"/>
+    <tag tag_id="13" name="Newtag" creator="1"
+         date_created="2017-06-14 14:10:11.0" uuid="e123ewqw-e5e4-42d0-9d11-4f52e89d121c"/>
+</dataset>

@@ -96,7 +96,7 @@ public class HibernateTagDao implements TagDAO {
 	 */
 	@Override
 	public List<EntityTag> getTags(OpenmrsObject openmrsObject) {
-		Criteria criteria = getSession().createCriteria(Tag.class);
+		Criteria criteria = getSession().createCriteria(EntityTag.class);
 		criteria.add(Restrictions.eq("objectType", openmrsObject.getClass().getName()));
 		criteria.add(Restrictions.eq("objectUuid", (openmrsObject.getUuid())));
 		return criteria.list();
@@ -107,7 +107,7 @@ public class HibernateTagDao implements TagDAO {
 	 */
 	@Override
 	public List<EntityTag> getTags(String objectType, String objectUuid) {
-		Criteria criteria = getSession().createCriteria(Tag.class);
+		Criteria criteria = getSession().createCriteria(EntityTag.class);
 		criteria.add(Restrictions.eq("objectType", objectType));
 		criteria.add(Restrictions.eq("objectUuid", objectUuid));
 		return criteria.list();

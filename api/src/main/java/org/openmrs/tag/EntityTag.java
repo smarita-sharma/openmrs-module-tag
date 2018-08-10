@@ -21,7 +21,6 @@ import java.util.UUID;
  * maintained to store information regarding Tags. A Tag Object contains three important properties;
  * <i>objectType</i>, the java class name of the OpenmrsObject, <i>objectUuid</i>, the unique
  * identifier of the object, and <i>tag</i> the text label to be attached to the OpenmrsObject.
-
  */
 
 public class EntityTag extends BaseOpenmrsData implements Serializable {
