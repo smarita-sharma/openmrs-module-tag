@@ -24,58 +24,58 @@ import java.util.UUID;
  */
 
 public class EntityTag extends BaseOpenmrsData implements Serializable {
-	
+
 	private static final long serialVersionUID = 6713376997114869435L;
-	
+
 	private Integer tagId;
-	
+
 	private String tag;
-	
+
 	private String objectUuid;
-	
+
 	private String objectType;
-	
+
 	private String Uuid = UUID.randomUUID().toString();
-	
+
 	public EntityTag() {
 	}
-	
+
 	public EntityTag(String tag, String objectUuid, String objectType) {
 		this.tag = tag;
 		this.objectUuid = objectUuid;
 		this.objectType = objectType;
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return tagId;
 	}
-	
+
 	@Override
 	public void setId(Integer tagId) {
 		this.tagId = tagId;
 	}
-	
+
 	public String getTag() {
 		return tag;
 	}
-	
+
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	
+
 	public String getObjectUuid() {
 		return objectUuid;
 	}
-	
+
 	public void setObjectUuid(String objectUuid) {
 		this.objectUuid = objectUuid;
 	}
-	
+
 	public String getObjectType() {
 		return objectType;
 	}
-	
+
 	public void setObjectType(String objectType) {
 		this.objectType = objectType;
 	}
