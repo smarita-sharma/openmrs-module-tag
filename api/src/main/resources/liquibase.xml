@@ -89,7 +89,7 @@
     <changeSet id="tag-2018-08-10-09-33" author="pappu">
         <dropColumn tableName="entity_tag" columnName="tag"/>
     </changeSet>
-    <changeSet id="tag-2018-08-10-09-35" author="pappy">
+    <changeSet id="tag-2018-08-10-09-35" author="pappu">
         <addColumn tableName="entity_tag">
             <column name="tag_id" type="int">
             </column>
@@ -102,5 +102,7 @@
                                  referencedColumnNames="tag_id"
                                  referencedTableName="entity_tag"/>
     </changeSet>
-
+    <changeSet id="tag-2018-08-10-09-35" author="pappu">
+        <renameColumn tableName="entity_tag" oldColumnName="tag_id" newColumnName="entity_tag_id"/>
+    </changeSet>
 </databaseChangeLog>

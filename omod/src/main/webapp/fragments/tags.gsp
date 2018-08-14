@@ -3,7 +3,7 @@
     ui.includeJavascript("uicommons", "angular-resource.min.js")
     ui.includeJavascript("uicommons", "angular-common-error.js")
     ui.includeJavascript("tag","app.js")
-    ui.includeJavascript("tag", "service/tagService.js")
+    ui.includeJavascript("tag", "service/entityTagService.js")
     ui.includeJavascript("uicommons", "ngDialog/ngDialog.js")
     ui.includeCss("uicommons", "ngDialog/ngDialog.min.css")
 

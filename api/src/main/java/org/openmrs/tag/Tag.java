@@ -10,6 +10,7 @@ package org.openmrs.tag;
  * graphic logo is a trademark of OpenMRS Inc.
  */
 
+import org.openmrs.Auditable;
 import org.openmrs.BaseOpenmrsData;
 import org.openmrs.User;
 import java.io.Serializable;
@@ -23,37 +24,37 @@ import java.util.UUID;
  * identifier of the object, and <i>tag</i> the text label to be attached to the OpenmrsObject.
  */
 
-public class Tag extends BaseOpenmrsData implements Serializable {
-
+public class Tag extends BaseOpenmrsData implements Serializable, Auditable {
+	
 	private static final long serialVersionUID = 6713376997114869435L;
-
+	
 	private Integer tagId;
-
+	
 	private String name;
-
+	
 	public Tag() {
 	}
-
+	
 	public Tag(String name) {
 		this.name = name;
 	}
-
+	
 	@Override
 	public Integer getId() {
 		return tagId;
 	}
-
+	
 	@Override
 	public void setId(Integer tagId) {
 		this.tagId = tagId;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 }

@@ -10,11 +10,10 @@ package org.openmrs.tag;
  * graphic logo is a trademark of OpenMRS Inc.
  */
 
+import org.openmrs.Auditable;
 import org.openmrs.BaseOpenmrsData;
-import org.openmrs.User;
+
 import java.io.Serializable;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * EntityTag is a textual label which can be applied any OpenmrsObject. A Separate tag_tag table is
@@ -23,57 +22,65 @@ import java.util.UUID;
  * identifier of the object, and <i>tag</i> the text label to be attached to the OpenmrsObject.
  */
 
-public class EntityTag extends BaseOpenmrsData implements Serializable {
-
+public class EntityTag extends BaseOpenmrsData implements Serializable, Auditable {
+	
 	private static final long serialVersionUID = 6713376997114869435L;
-
-	private Integer tagId;
-
-	private String tag;
-
+	
+	public Integer getEntityTagId() {
+		return entityTagId;
+	}
+	
+	public void setEntityTagId(Integer entityTagId) {
+		this.entityTagId = entityTagId;
+	}
+	
+	private Integer entityTagId;
+	
+	private Tag tag;
+	
 	private String objectUuid;
-
+	
 	private String objectType;
-
+	
 	public EntityTag() {
 	}
-
-	public EntityTag(String tag, String objectUuid, String objectType) {
+	
+	public EntityTag(Tag tag, String objectUuid, String objectType) {
 		this.tag = tag;
 		this.objectUuid = objectUuid;
 		this.objectType = objectType;
 	}
-
+	
 	@Override
 	public Integer getId() {
-		return tagId;
+		return this.getEntityTagId();
 	}
-
+	
 	@Override
 	public void setId(Integer tagId) {
-		this.tagId = tagId;
+		this.setEntityTagId(tagId);
 	}
-
-	public String getTag() {
+	
+	public Tag getTag() {
 		return tag;
 	}
-
-	public void setTag(String tag) {
+	
+	public void setTag(Tag tag) {
 		this.tag = tag;
 	}
-
+	
 	public String getObjectUuid() {
 		return objectUuid;
 	}
-
+	
 	public void setObjectUuid(String objectUuid) {
 		this.objectUuid = objectUuid;
 	}
-
+	
 	public String getObjectType() {
 		return objectType;
 	}
-
+	
 	public void setObjectType(String objectType) {
 		this.objectType = objectType;
 	}

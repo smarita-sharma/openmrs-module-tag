@@ -15,19 +15,33 @@
 -->
 <hibernate-mapping package="org.openmrs.tag">
     <class name="EntityTag" table="entity_tag">
-        <id name="id" column="tag_id" unsaved-value="0">
+        <id name="entityTagId" column="entity_tag_id" unsaved-value="0">
             <generator class="native">
                 <param name="sequence">tag_id_seq</param>
             </generator>
         </id>
-        <property name="tag" type="java.lang.String"
-                  column="tag" length="255" not-null="true"/>
+        <property name="uuid" type="java.lang.String" column="uuid" length="38" unique="true"/>
         <property name="objectUuid" type="java.lang.String"
                   column="object_uuid" length="38" not-null="true"/>
         <property name="objectType" type="java.lang.String"
                   column="object_type" length="255" not-null="true" />
+        <many-to-one name="tag" class="org.openmrs.tag.Tag" column="tag_id" not-null="true"/>
+
         <many-to-one name="creator" class="org.openmrs.User" column="creator" not-null="true"/>
         <property name="dateCreated" type="java.util.Date" column="date_created" length="19" not-null="true"/>
-        <property name="uuid" type="java.lang.String" column="uuid" length="38" unique="true"/>
+        <property name="dateChanged" type="java.util.Date"
+                  column="date_changed" not-null="false" length="19" />
+        <many-to-one name="changedBy" class="org.openmrs.User" not-null="false">
+            <column name="changed_by" />
+        </many-to-one>
+        <property name="voided" type="java.lang.Boolean" column="voided"
+                  length="1" not-null="true" />
+        <property name="dateVoided" type="java.util.Date"
+                  column="date_voided" length="19" />
+        <property name="voidReason" type="java.lang.String"
+                  column="void_reason" length="255" />
+        <many-to-one name="voidedBy" class="org.openmrs.User">
+            <column name="voided_by" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

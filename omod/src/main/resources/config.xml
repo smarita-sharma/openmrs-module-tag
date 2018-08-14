@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <module configVersion="1.2">
-	
+
 	<!-- Base Module Properties -->
 	<id>${project.parent.artifactId}</id>
 	<name>${project.parent.name}</name>
@@ -13,9 +13,9 @@
 	</description>
 
 	<activator>org.openmrs.tag.TagActivator</activator>
-	
+
 	<!-- /Base Module Properties -->
-	
+
 	<require_version>${openmrsPlatformVersion}</require_version>
 
 	<require_modules>
@@ -35,10 +35,11 @@
 			org.openmrs.module.webservices.rest
 		</require_module>
 	</require_modules>
-	
+
 
 	<mappingFiles>
 		Tag.hbm.xml
+		EntityTag.hbm.xml
 	</mappingFiles>
 
 	<privilege>
@@ -69,6 +70,6 @@
 		<file>messages_es.properties</file>
 	</messages>
 	<!-- /Internationalization -->
-	
+
 </module>
 

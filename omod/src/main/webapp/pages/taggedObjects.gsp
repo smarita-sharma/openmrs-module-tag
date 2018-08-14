@@ -5,7 +5,7 @@
     ui.includeJavascript("uicommons", "angular-app.js")
     ui.includeJavascript("uicommons", "angular-common.js")
     ui.includeJavascript("tag","taggedObjects.js")
-    ui.includeJavascript("tag", "service/tagService.js")
+    ui.includeJavascript("tag", "service/entityTagService.js")
     ui.includeJavascript("uicommons", "services/personService.js")
 %>
 

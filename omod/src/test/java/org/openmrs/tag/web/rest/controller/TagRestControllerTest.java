@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.openmrs.tag.Tag;
 import org.openmrs.tag.EntityTag;
-import org.openmrs.tag.api.TagService;
+import org.openmrs.tag.api.EntityTagService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.test.Util;
@@ -27,13 +26,14 @@ import static org.junit.Assert.assertThat;
 
 public class TagRestControllerTest extends MainResourceControllerTest {
 	
-	private TagService tagService;
+	private EntityTagService entityTagService;
 	
 	private static final String TAG_RESOURCE_DATASET = "TagServiceDataset.xml";
 	
 	@Before
 	public void setup() throws Exception {
-		tagService = Context.getService(TagService.class);
+		entityTagService = Context.getService(EntityTagService.class);
+		executeDataSet(INITIAL_XML_DATASET_PACKAGE_PATH);
 		executeDataSet(TAG_RESOURCE_DATASET);
 	}
 	
@@ -95,23 +95,8 @@ public class TagRestControllerTest extends MainResourceControllerTest {
 	
 	@Test
 	public void deleteTags_shouldPurgeTag() throws Exception {
-		assertNotNull(tagService.getTagByUuid(getUuid()));
+		assertNotNull(entityTagService.getTagByUuid(getUuid()));
 		handle(newDeleteRequest(getURI() + "/" + getUuid(), new Parameter("purge", "")));
-		assertNull(tagService.getTagByUuid(getUuid()));
-	}
-	
-	@Test
-	public void addTags_shouldCreateNewTagObject() throws Exception {
-		SimpleObject tag = new SimpleObject();
-		String objectType = "org.openmrs.Obs";
-		String objectUuid = "2f616900-5e7c-4667-9a7f-dcb260abf1de";
-		tag.add("tag", "testName");
-		tag.add("objectType", objectType);
-		tag.add("objectUuid", objectUuid);
-		List<EntityTag> tagList = Context.getService(TagService.class).getTags(objectType, objectUuid);
-		assertEquals(2, tagList.size());
-		SimpleObject result = deserialize(handle(newPostRequest(getURI(), tag)));
-		List<EntityTag> tagList1 = Context.getService(TagService.class).getTags(objectType, objectUuid);
-		assertEquals(3, tagList1.size());
+		assertNull(entityTagService.getTagByUuid(getUuid()));
 	}
 }

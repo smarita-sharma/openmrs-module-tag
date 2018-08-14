@@ -6,5 +6,6 @@
 <hibernate-configuration>
     <session-factory>
         <mapping resource="Tag.hbm.xml"/>
+        <mapping resource="EntityTag.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

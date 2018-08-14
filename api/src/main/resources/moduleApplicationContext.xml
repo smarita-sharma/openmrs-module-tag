@@ -25,16 +25,17 @@
 
     <context:component-scan base-package="org.openmrs.tag" />
 
-    <!-- Wraps TagService methods in DB transactions and OpenMRS interceptors,
+    <!-- Wraps EntityTagService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="tagService"
+    <bean id="entityTagService"
           class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager" />
         </property>
         <property name="target">
-            <bean class="org.openmrs.tag.api.impl.TagServiceImpl">
-                <property name="dao" ref="tagDAO" />
+            <bean class="org.openmrs.tag.api.impl.EntityTagServiceImpl">
+                <property name="entityTagDAO" ref="entityTagDAO" />
+                <property name="tagService" ref="tagService" />
             </bean>
         </property>
         <property name="preInterceptors">
@@ -45,8 +46,35 @@
         </property>
     </bean>
 
-    <!-- Adds TagService to OpenMRS context so it can be accessed
-    calling Context.getService(TagService.class) -->
+    <bean id="tagService"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+        <property name="target">
+            <bean class="org.openmrs.tag.api.impl.TagServiceImpl">
+                <property name="tagDAO" ref="tagDAO" />
+            </bean>
+        </property>
+        <property name="preInterceptors">
+            <ref bean="serviceInterceptors" />
+        </property>
+        <property name="transactionAttributeSource">
+            <ref bean="transactionAttributeSource" />
+        </property>
+    </bean>
+
+    <!-- Adds EntityTagService to OpenMRS context so it can be accessed
+    calling Context.getService(EntityTagService.class) -->
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>org.openmrs.tag.api.EntityTagService</value>
+                <ref bean="entityTagService"/>
+            </list>
+        </property>
+    </bean>
+
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>

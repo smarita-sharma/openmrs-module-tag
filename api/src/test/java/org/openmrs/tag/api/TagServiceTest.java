@@ -1,3 +1,5 @@
+package org.openmrs.tag.api;
+
 /**
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
@@ -7,18 +9,15 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.tag.api;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.Encounter;
 import org.openmrs.Obs;
-import org.openmrs.OpenmrsObject;
-import org.openmrs.tag.Tag;
-import org.openmrs.tag.EntityTag;
 import org.openmrs.api.context.Context;
+import org.openmrs.tag.EntityTag;
+import org.openmrs.tag.Tag;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -26,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * This is a unit test, which verifies logic in TagService.
+ * This is a unit test, which verifies logic in EntityTagService.
  */
 public class TagServiceTest extends BaseModuleContextSensitiveTest {
 	
@@ -36,81 +35,33 @@ public class TagServiceTest extends BaseModuleContextSensitiveTest {
 	
 	@Before
 	public void runBeforeTests() throws Exception {
+		executeDataSet(INITIAL_XML_DATASET_PACKAGE_PATH);
 		executeDataSet(TAG_INITIAL_XML);
 		
 		tagService = Context.getService(TagService.class);
 	}
 	
 	@Test
+	public void getAllTags_shouldFetchAllUniqueStringTags() throws Exception {
+		List<Tag> list = tagService.getAllTags();
+		assertEquals(6, list.size());
+	}
+	
+	@Test
 	public void getTag_shouldFetchUniqueMatchingTag() throws Exception {
-		EntityTag tag = tagService.getTag(3);
-		assertEquals("e12c432c-1b9f-343e-b332-f3ef6c88ad3f", tag.getUuid());
+		Tag tag = tagService.getTag(3);
+		assertEquals("b87c9a48-4712-435a-ab50-7a6e7dd4b88d", tag.getUuid());
 	}
 	
 	@Test
 	public void getTags_shouldFetchListOfMatchingTags() throws Exception {
-		List<EntityTag> tagList = tagService.getTags("Vip", false);
+		List<Tag> tagList = tagService.getTags("Vip", false);
 		assertEquals(2, tagList.size());
 	}
 	
 	@Test
 	public void getTags_shouldFetchListOfExactMatchingTags() throws Exception {
-		List<EntityTag> tagList = tagService.getTags("Vip-Encounters", true);
+		List<Tag> tagList = tagService.getTags("Vip-Encounters", true);
 		assertEquals(1, tagList.size());
-	}
-	
-	@Test
-	public void getTags_shouldReturnListOfTagsOnAnOpenmrsObject() throws Exception {
-		Encounter encounter = Context.getEncounterService().getEncounterByUuid("e403fafb-e5e4-42d0-9d11-4f52e89d148c");
-		List<EntityTag> tags = tagService.getTags(encounter);
-		assertEquals(3, tags.size());
-	}
-	
-	@Test
-	public void getTags_shouldReturnListOfTagsOnAnOpenmrsObjectTakingObjectTypeAndObjectUuidParameters() throws Exception {
-		List<EntityTag> tags = tagService.getTags("org.openmrs.Encounter", "e403fafb-e5e4-42d0-9d11-4f52e89d148c");
-		assertEquals(3, tags.size());
-	}
-	
-	@Test
-	public void getTags_shouldReturnTagsWhichMatchObjectTypeAndHaveAnyTag() throws Exception {
-		List<Class<? extends OpenmrsObject>> types = new ArrayList<Class<? extends OpenmrsObject>>();
-		types.add(Encounter.class);
-		types.add(Obs.class);
-		List<String> tags = new ArrayList<String>();
-		tags.add("Initial");
-		tags.add("FollowUp");
-		List<EntityTag> tagList = tagService.getTags(types, tags);
-		assertEquals(7, tagList.size());
-	}
-	
-	@Test
-	public void getTags_shouldIgnoreMatchingByTypeIfObjectTypesListIsEmpty() {
-		List<Class<? extends OpenmrsObject>> types = new ArrayList<Class<? extends OpenmrsObject>>();
-		List<String> tags = new ArrayList<String>();
-		tags.add("Initial");
-		tags.add("FollowUp");
-		List<EntityTag> tagList = tagService.getTags(types, tags);
-		assertEquals(9, tagList.size());
-	}
-	
-	@Test
-	public void addTag_shouldAddTagToObject() {
-		Obs obs = Context.getObsService().getObsByUuid("2f616900-5e7c-4667-9a7f-dcb260abf1de");
-		List<EntityTag> list = tagService.getTags(obs);
-		assertEquals(2, list.size());
-		tagService.addTag(obs, "Important");
-		List<EntityTag> list1 = tagService.getTags(obs);
-		assertEquals(3, list1.size());
-	}
-	
-	@Test
-	public void removeTag_shouldRemoveTagFromObject() {
-		Obs obs = Context.getObsService().getObsByUuid("2f616900-5e7c-4667-9a7f-dcb260abf1de");
-		List<EntityTag> list = tagService.getTags(obs);
-		assertEquals(2, list.size());
-		assertTrue(tagService.removeTag(obs, "Initial"));
-		List<EntityTag> list1 = tagService.getTags(obs);
-		assertEquals(1, list1.size());
 	}
 }

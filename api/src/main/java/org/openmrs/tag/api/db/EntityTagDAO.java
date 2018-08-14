@@ -14,23 +14,30 @@
 
 package org.openmrs.tag.api.db;
 
+import org.openmrs.OpenmrsObject;
 import org.openmrs.tag.Tag;
+import org.openmrs.tag.EntityTag;
+import org.openmrs.api.APIException;
 
 import java.util.List;
 
-public interface TagDAO {
+public interface EntityTagDAO {
 	
-	Tag getTagByUuid(String uuid);
+	EntityTag getEntityTagByUuid(String uuid);
 	
-	Tag getTag(Integer id);
+	EntityTag getEntityTag(Integer uuid);
 	
-	List<Tag> getAllTags();
+	List<EntityTag> getEntityTags(Tag tag);
 	
-	Tag getTag(String tagName);
+	List<EntityTag> getEntityTags(Tag tag, String objectType);
 	
-	Tag saveTag(Tag tag);
+	List<EntityTag> getEntityTagsByObjectUuid(String objectUuid);
 	
-	void deleteTag(Tag tag);
+	EntityTag getEntityTag(Tag tag, OpenmrsObject openmrsObject);
 	
-	List<Tag> getTags(String searchPhrase, boolean exactMatch);
+	EntityTag saveEntityTag(EntityTag entityTag);
+	
+	void deleteEntityTag(EntityTag entityTag);
+	
+	<T extends OpenmrsObject> T getObject(Class<T> objectType, String objectUuid);
 }
