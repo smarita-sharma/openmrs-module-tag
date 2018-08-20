@@ -36,19 +36,18 @@
 			<version>${openmrsPlatformVersion}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>javax.servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
-			<artifactId>webservices.rest-omod</artifactId>
+			<artifactId>webservices.rest-omod-common</artifactId>
 			<version>${webServicesRestVersion}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>webservices.rest-omod</artifactId>
-			<version>${webServicesRestVersion}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
+			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
@@ -61,6 +60,12 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>uiframework-api</artifactId>
 			<version>${uiframeworkVersion}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 			<scope>test</scope>
 		</dependency>
     </dependencies>

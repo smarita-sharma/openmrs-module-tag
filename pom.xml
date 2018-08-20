@@ -40,13 +40,6 @@
 				<version>${webServicesRestVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>webservices.rest-omod-common</artifactId>
-				<version>${webServicesRestVersion}</version>
-				<type>test-jar</type>
-				<scope>test</scope>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -75,8 +68,8 @@
 	</pluginRepositories>
 
 	<properties>
-		<openmrsPlatformVersion>2.0.0</openmrsPlatformVersion>
-		<webServicesRestVersion>2.14</webServicesRestVersion>
+		<openmrsPlatformVersion>2.1.1</openmrsPlatformVersion>
+		<webServicesRestVersion>2.12</webServicesRestVersion>
 		<uiframeworkVersion>3.4</uiframeworkVersion>
 		<uicommonsModuleVersion>1.7</uicommonsModuleVersion>
 		<appframeworkVersion>2.4</appframeworkVersion>
