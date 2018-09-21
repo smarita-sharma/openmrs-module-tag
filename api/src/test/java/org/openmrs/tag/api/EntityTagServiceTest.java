@@ -79,7 +79,7 @@ public class EntityTagServiceTest extends BaseModuleContextSensitiveTest {
 	//		Obs obs = Context.getObsService().getObsByUuid("2f616900-5e7c-4667-9a7f-dcb260abf1de");
 	//		List<EntityTag> list = entityTagService.getTags(obs);
 	//		assertEquals(2, list.size());
-	//		assertTrue(entityTagService.deleteTag(obs, tagService.getTag(1)));
+	//		assertTrue(entityTagService.deleteEntityTag(obs, tagService.getEntityTag(1)));
 	//		List<EntityTag> list1 = entityTagService.getTags(obs);
 	//		assertEquals(1, list1.size());
 	//	}

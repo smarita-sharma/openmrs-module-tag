@@ -22,7 +22,7 @@ import java.io.Serializable;
  * identifier of the object, and <i>tag</i> the text label to be attached to the OpenmrsObject.
  */
 
-public class EntityTag extends BaseOpenmrsData implements Serializable, Auditable {
+public class EntityTag extends BaseOpenmrsData implements Serializable {
 	
 	private static final long serialVersionUID = 6713376997114869435L;
 	

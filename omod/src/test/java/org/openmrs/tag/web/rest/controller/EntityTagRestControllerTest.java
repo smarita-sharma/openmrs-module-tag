@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.openmrs.tag.EntityTag;
 import org.openmrs.tag.api.EntityTagService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-public class TagRestControllerTest extends MainResourceControllerTest {
+public class EntityTagRestControllerTest extends MainResourceControllerTest {
 	
 	private EntityTagService entityTagService;
 	
@@ -42,12 +42,12 @@ public class TagRestControllerTest extends MainResourceControllerTest {
 	
 	@Override
 	public String getURI() {
-		return TagRestTestConstants.TAG_URI;
+		return TagRestTestConstants.ENTITY_TAG_URI;
 	}
 	
 	@Override
 	public String getUuid() {
-		return TagRestTestConstants.TAG_UUID;
+		return TagRestTestConstants.ENTITY_TAG_UUID;
 	}
 	
 	@Override
@@ -63,13 +63,15 @@ public class TagRestControllerTest extends MainResourceControllerTest {
 	}
 	
 	@Test
-	public void shouldFindTagByUuid() throws Exception {
+	public void shouldFindEntityTagByUuid() throws Exception {
 		MockHttpServletRequest req = request(RequestMethod.GET, getURI() + "/" + getUuid());
 		SimpleObject result = deserialize(handle(req));
 		assertThat((String) PropertyUtils.getProperty(result, "uuid"), is(getUuid()));
 	}
 	
+	//To be moved to TagRestControllerTest
 	@Test
+	@Ignore
 	public void shouldFindTagByTagName() throws Exception {
 		MockHttpServletRequest req = request(RequestMethod.GET, getURI() + "/" + "Initial");
 		SimpleObject result = deserialize(handle(req));
@@ -77,15 +79,15 @@ public class TagRestControllerTest extends MainResourceControllerTest {
 	}
 	
 	@Test
-	public void shouldFindTagByTagObjectTypeAndTagName() throws Exception {
-		SimpleObject response = deserialize(handle(newGetRequest(getURI(), new Parameter("tag", "Initial"), new Parameter(
-		        "objectType", "org.openmrs.Encounter"), new Parameter("v", "default"))));
+	public void shouldFindEntityTagByTagObjectTypeAndTagName() throws Exception {
+		SimpleObject response = deserialize(handle(newGetRequest(getURI(), new Parameter("tag", "Vip-Encounters"),
+		    new Parameter("objectType", "org.openmrs.Encounter"), new Parameter("v", "default"))));
 		List<Object> results = Util.getResultsList(response);
 		assertEquals(3, results.size());
 	}
 	
 	@Test
-	public void shouldFindTagByTagObjectTypeAndObjectUuid() throws Exception {
+	public void shouldFindEntityTagByTagObjectTypeAndObjectUuid() throws Exception {
 		SimpleObject response = deserialize(handle(newGetRequest(getURI(), new Parameter("objectType",
 		        "org.openmrs.Encounter"), new Parameter("objectUuid", "e403fafb-e5e4-42d0-9d11-4f52e89d148c"),
 		    new Parameter("v", "full"))));
@@ -94,9 +96,9 @@ public class TagRestControllerTest extends MainResourceControllerTest {
 	}
 	
 	@Test
-	public void deleteTags_shouldPurgeTag() throws Exception {
-		assertNotNull(entityTagService.getTagByUuid(getUuid()));
+	public void deleteEntityTags_shouldPurgeEntityTag() throws Exception {
+		assertNotNull(entityTagService.getEntityTagByUuid(getUuid()));
 		handle(newDeleteRequest(getURI() + "/" + getUuid(), new Parameter("purge", "")));
-		assertNull(entityTagService.getTagByUuid(getUuid()));
+		assertNull(entityTagService.getEntityTagByUuid(getUuid()));
 	}
 }

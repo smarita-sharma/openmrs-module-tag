@@ -21,13 +21,13 @@ import java.util.List;
 
 public interface EntityTagService extends OpenmrsService {
 	
-	EntityTag getTagByUuid(String uuid);
+	EntityTag getEntityTagByUuid(String uuid);
 	
-	EntityTag getTag(Integer tagId);
+	EntityTag getEntityTag(Integer tagId);
 	
-	EntityTag saveTag(EntityTag tag);
+	EntityTag saveEntityTag(EntityTag tag);
 	
-	void deleteTag(EntityTag tag);
+	void deleteEntityTag(EntityTag tag);
 	
 	EntityTag addTag(OpenmrsObject openmrsObject, Tag tag);
 	

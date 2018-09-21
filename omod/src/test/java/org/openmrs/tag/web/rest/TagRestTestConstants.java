@@ -17,4 +17,8 @@ public class TagRestTestConstants {
 	public final static String TAG_UUID = "7379a456-296a-2331-9c83-a3714b82d7ac";
 	
 	public final static String TAG_URI = "tag";
+	
+	public final static String ENTITY_TAG_UUID = "fe1c676c-38b8-4147-a790-5e3bc0957c4c";
+	
+	public final static String ENTITY_TAG_URI = "entitytag";
 }

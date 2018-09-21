@@ -42,18 +42,18 @@ public class EntityTagServiceImpl extends BaseOpenmrsService implements EntityTa
 	}
 	
 	@Override
-	public EntityTag getTagByUuid(String uuid) {
+	public EntityTag getEntityTagByUuid(String uuid) {
 		return entityTagDAO.getEntityTagByUuid(uuid);
 	}
 	
 	@Override
-	public EntityTag getTag(Integer tagId) {
+	public EntityTag getEntityTag(Integer tagId) {
 		return entityTagDAO.getEntityTag(tagId);
 	}
 	
 	@Override
 	@Transactional(readOnly = false)
-	public EntityTag saveTag(EntityTag tag) {
+	public EntityTag saveEntityTag(EntityTag tag) {
 		if (getObject(toClass(tag.getObjectType()), tag.getObjectUuid()) == null) {
 			log.warn("Object does not exist in the the database");
 		}
@@ -61,7 +61,7 @@ public class EntityTagServiceImpl extends BaseOpenmrsService implements EntityTa
 	}
 	
 	@Override
-	public void deleteTag(EntityTag tag) {
+	public void deleteEntityTag(EntityTag tag) {
 		entityTagDAO.deleteEntityTag(tag);
 	}
 	
@@ -75,7 +75,7 @@ public class EntityTagServiceImpl extends BaseOpenmrsService implements EntityTa
 		if (hasTag(openmrsObject, tag)) {
 			log.warn("duplicate Tag for " + openmrsObject);
 		} else {
-			return saveTag(new EntityTag(tag, openmrsObject.getUuid(), openmrsObject.getClass().getName()));
+			return saveEntityTag(new EntityTag(tag, openmrsObject.getUuid(), openmrsObject.getClass().getName()));
 		}
 		return null;
 	}

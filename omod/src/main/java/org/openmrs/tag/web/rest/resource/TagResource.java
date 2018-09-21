@@ -13,8 +13,6 @@
  */
 package org.openmrs.tag.web.rest.resource;
 
-import org.apache.commons.lang3.StringUtils;
-import org.openmrs.OpenmrsObject;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RequestContext;
@@ -31,48 +29,46 @@ import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
 import org.openmrs.module.webservices.rest.web.resource.impl.*;
 import org.openmrs.module.webservices.rest.web.response.ConversionException;
-import org.openmrs.module.webservices.rest.web.response.GenericRestException;
 import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 import org.openmrs.tag.EntityTag;
+import org.openmrs.tag.Tag;
 import org.openmrs.tag.api.EntityTagService;
-import org.openmrs.util.OpenmrsClassLoader;
+import org.openmrs.tag.api.TagService;
 
-import java.util.ArrayList;
-
-@Resource(name = RestConstants.VERSION_1 + "/entitytag", supportedClass = EntityTag.class, supportedOpenmrsVersions = {
-        "1.11.*", "1.12.*", "2.0.*", "2.1.*" })
-public class EntityTagResource extends DataDelegatingCrudResource<EntityTag> {
+@Resource(name = RestConstants.VERSION_1 + "/tag", supportedClass = Tag.class, supportedOpenmrsVersions = { "1.11.*",
+        "1.12.*", "2.0.*", "2.1.*" })
+public class TagResource extends DataDelegatingCrudResource<Tag> {
 	
 	/**
-	 * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceHandler#newDelegate()
+	 * @see DelegatingResourceHandler#newDelegate()
 	 */
 	@Override
-	public EntityTag newDelegate() {
-		return new EntityTag();
+	public Tag newDelegate() {
+		return new Tag();
 	}
 	
 	/**
 	 * @see BaseDelegatingResource#getByUniqueId(String)
 	 */
 	@Override
-	public EntityTag getByUniqueId(String uuid) {
-		return Context.getService(EntityTagService.class).getEntityTagByUuid(uuid);
+	public Tag getByUniqueId(String uuid) {
+		return Context.getService(TagService.class).getTagByUuid(uuid);
 	}
 	
 	/**
-	 * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceHandler#save(Object)
+	 * @see DelegatingResourceHandler#save(Object)
 	 */
 	@Override
-	public EntityTag save(EntityTag tag) {
-		return getService().saveEntityTag(tag);
+	public Tag save(Tag tag) {
+		return getService().saveTag(tag);
 	}
 	
 	/**
 	 * @see BaseDelegatingResource#delete(Object, String, RequestContext)
 	 */
 	@Override
-	protected void delete(EntityTag tag, String reason, RequestContext context) {
+	protected void delete(Tag tag, String reason, RequestContext context) {
 		throw new ResourceDoesNotSupportOperationException("delete not allowed on tag");
 	}
 	
@@ -80,23 +76,34 @@ public class EntityTagResource extends DataDelegatingCrudResource<EntityTag> {
 	 * @see BaseDelegatingResource#purge(Object, RequestContext)
 	 */
 	@Override
-	public void purge(EntityTag entityTag, RequestContext context) {
-		getService().deleteEntityTag(entityTag);
+	public void purge(Tag tag, RequestContext context) {
+		getService().deleteTag(tag);
 	}
 	
 	/**
 	 * Returns the DefaultRepresentation
 	 */
 	@RepHandler(DefaultRepresentation.class)
-	public SimpleObject asDef(EntityTag delegate) throws ConversionException {
+	public SimpleObject asDef(Tag delegate) throws ConversionException {
 		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		description.addProperty("tag", Representation.REF);
+		description.addProperty("name");
 		description.addProperty("uuid");
-		description.addProperty("objectType");
-		description.addProperty("objectUuid");
 		
 		description.addSelfLink();
 		description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+		return convertDelegateToRepresentation(delegate, description);
+	}
+	
+	/**
+	 * Returns the FullRepresentation
+	 */
+	@RepHandler(FullRepresentation.class)
+	public SimpleObject asFull(Tag delegate) throws ConversionException {
+		DelegatingResourceDescription description = new DelegatingResourceDescription();
+		description.addProperty("uuid");
+		description.addProperty("name");
+		//TODO Fix this
+		//		description.addProperty("auditInfo");
 		return convertDelegateToRepresentation(delegate, description);
 	}
 	
@@ -109,17 +116,14 @@ public class EntityTagResource extends DataDelegatingCrudResource<EntityTag> {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("display");
 			description.addProperty("uuid");
-			description.addProperty("tag", Representation.REF);
 			description.addSelfLink();
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			return description;
 		} else if (rep instanceof FullRepresentation) {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("uuid");
-			description.addProperty("tag", Representation.REF);
-			description.addProperty("objectType");
-			description.addProperty("objectUuid");
-			//TODO uncomment this and get the tests passing
+			description.addProperty("name");
+			//TODO Fix this
 			//			description.addProperty("auditInfo");
 			description.addSelfLink();
 			return description;
@@ -131,15 +135,15 @@ public class EntityTagResource extends DataDelegatingCrudResource<EntityTag> {
 	 * Property getter for 'display'
 	 */
 	@PropertyGetter("display")
-	public String getDisplay(EntityTag instance) {
-		return instance.getTag().getName();
+	public String getDisplay(Tag instance) {
+		return instance.getName();
 	}
 	
 	/**
 	 * @return the TagService
 	 */
-	private EntityTagService getService() {
-		return Context.getService(EntityTagService.class);
+	private TagService getService() {
+		return Context.getService(TagService.class);
 	}
 	
 	/**
@@ -149,9 +153,7 @@ public class EntityTagResource extends DataDelegatingCrudResource<EntityTag> {
 	public DelegatingResourceDescription getCreatableProperties() {
 		DelegatingResourceDescription description = new DelegatingResourceDescription();
 		
-		description.addRequiredProperty("tag");
-		description.addRequiredProperty("objectType");
-		description.addRequiredProperty("objectUuid");
+		description.addRequiredProperty("name");
 		
 		return description;
 	}
@@ -213,19 +215,11 @@ public class EntityTagResource extends DataDelegatingCrudResource<EntityTag> {
 	/**
 	 * @see DelegatingCrudResource#doSearch(RequestContext)
 	 */
-	@Override
-	protected PageableResult doSearch(RequestContext context) {
-		String tagName = context.getRequest().getParameter("tag");
-		String objectType = context.getRequest().getParameter("objectType");
-		String objectUuid = context.getRequest().getParameter("objectUuid");
-		
-		if (StringUtils.isNotBlank(objectType) && StringUtils.isNotBlank(tagName)) {
-			return new AlreadyPaged<EntityTag>(context, getService().findEntityTags(tagName, objectType), false);
-		} else if (StringUtils.isNotBlank(objectUuid)) {
-			return new AlreadyPaged<EntityTag>(context, getService().getEntityTagsByObject(objectUuid), false);
-		} else {
-			throw new GenericRestException();
-		}
-	}
+	//	@Override
+	//	protected PageableResult doSearch(RequestContext context) {
+	//		String tagName = context.getRequest().getParameter("tag");
+	//		String objectType = context.getRequest().getParameter("objectType");
+	//		return new AlreadyPaged<EntityTag>(context, getService().getTags(tagName, objectType), false);
+	//	}
 	
 }

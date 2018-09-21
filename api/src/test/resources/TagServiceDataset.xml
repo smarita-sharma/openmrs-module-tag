@@ -13,7 +13,7 @@
          date_created="2017-06-14 14:10:11.0" uuid="12a1048c-c8a9-4fd5-ad60-8ca3e74bcf4f"/>
 
     <entity_tag entity_tag_id="1" tag_id="1" object_uuid="e403fafb-e5e4-42d0-9d11-4f52e89d148c" object_type="org.openmrs.Encounter" creator="1" voided="false"
-    date_created="2017-06-03 14:09:05.0" uuid="7379a456-296a-2331-9c83-a3714b82d7ac"/>
+    date_created="2017-06-03 14:09:05.0" uuid="fe1c676c-38b8-4147-a790-5e3bc0957c4c"/>
     <entity_tag entity_tag_id="2" tag_id="2" object_uuid="19e023e8-20ee-46b7-ade6-9e68f897b7a9" object_type="org.openmrs.Encounter" creator="1" voided="false"
          date_created="2017-06-03 14:09:05.0" uuid="7379a456-296a-1112-8b21-a2144b82d7bc"/>
     <entity_tag entity_tag_id="3" tag_id="3" object_uuid="6519d653-393b-4118-9c83-a3715b82d4ac" object_type="org.openmrs.Encounter" creator="1" voided="false"
