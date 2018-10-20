@@ -101,4 +101,22 @@
                                  referencedColumnNames="tag_id"
                                  referencedTableName="tag"/>
     </changeSet>
+    <changeSet id="tag-2018-10-20-15-28" author="arjun">
+        <addColumn tableName="entity_tag">
+            <column name="changed_by" type="int"/>
+            <column name="date_changed" type="DATETIME"/>
+            <column defaultValueBoolean="false" name="voided" type="BOOLEAN"><constraints nullable="false" /></column>
+            <column name="date_voided" type="datetime" />
+            <column name="voided_by" type="int" />
+            <column name="void_reason" type="varchar(255)" />
+        </addColumn>
+        <addColumn tableName="tag">
+            <column name="changed_by" type="int"/>
+            <column name="date_changed" type="DATETIME"/>
+            <column defaultValueBoolean="false" name="voided" type="BOOLEAN"><constraints nullable="false" /></column>
+            <column name="date_voided" type="datetime" />
+            <column name="voided_by" type="int" />
+            <column name="void_reason" type="varchar(255)" />
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

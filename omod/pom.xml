@@ -47,6 +47,7 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>webservices.rest-omod-common</artifactId>
 			<version>${webServicesRestVersion}</version>
+			<scope>provided</scope>
 			<type>jar</type>
 		</dependency>
 		<dependency>

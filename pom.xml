@@ -68,8 +68,8 @@
 	</pluginRepositories>
 
 	<properties>
-		<openmrsPlatformVersion>2.1.3</openmrsPlatformVersion>
-		<webServicesRestVersion>2.22.0</webServicesRestVersion>
+		<openmrsPlatformVersion>2.1.1</openmrsPlatformVersion>
+		<webServicesRestVersion>2.20.0</webServicesRestVersion>
 		<uiframeworkVersion>3.4</uiframeworkVersion>
 		<uicommonsModuleVersion>1.7</uicommonsModuleVersion>
 		<appframeworkVersion>2.4</appframeworkVersion>
